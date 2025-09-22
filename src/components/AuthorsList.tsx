@@ -41,7 +41,7 @@ const AuthorsList = ({ authors, onDelete }: Props) => {
                           Editar
                         </Link>
                         <button onClick={() => onDelete(author)}
-                          className="ml-auto rounded-md bg-gray-400 px-1.5 py-0.5 text-xs text-white shadow-sm hover:bg-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-600"
+                          className="ml-auto rounded-md bg-gray-400 px-1.5 py-0.5 text-xs text-black shadow-sm hover:bg-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-600"
                         >
                           Eliminar
                         </button>

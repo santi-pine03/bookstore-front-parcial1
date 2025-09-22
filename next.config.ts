@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "upload.wikimedia.org" }, 
     ],
   },
+  env: {
+    NEXT_PUBLIC_API_BASE: "http://127.0.0.1:8080",
+  },
 };
 
 export default nextConfig;

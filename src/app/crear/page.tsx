@@ -16,15 +16,29 @@ export default function CreateAuthor() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
+    const [book, setBook] = useState({ title: "", description: "" });
+    const [award, setAward] = useState({ name: "", year: "" });
 
 
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         const { name, value } = e.target;
-        setAuthor((prevAuthor) => ({
-            ...prevAuthor,
-            [name]: value,
-        }));
+        if (name in author) {
+            setAuthor((prevAuthor) => ({
+                ...prevAuthor,
+                [name]: value,
+            }));
+        } else if (name in book) {
+            setBook((prevBook) => ({
+                ...prevBook,
+                [name]: value,
+            }));
+        } else if (name in award) {
+            setAward((prevAward) => ({
+                ...prevAward,
+                [name]: value,
+            }));
+        }
     }
 
     async function handleSubmit(e: React.FormEvent) {
@@ -67,7 +81,7 @@ export default function CreateAuthor() {
       <div className="container mx-auto px-2 py-8 text-center">
       <h1 className = "mb-2 text-3xl font-bold tracking-tight text-white">Crea un nuevo autor</h1>
       <div className="flex-1 flex items-center justify-center">
-        <form
+        <form 
           onSubmit={handleSubmit}
           className="space-y-4 bg-gray-200 p-4 rounded-lg shadow-md w-full max-w-md"
         >

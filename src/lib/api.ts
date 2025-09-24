@@ -1,4 +1,6 @@
 import { Author } from "@/types/author";
+import { Book } from "@/types/book";
+import { prize } from "@/types/prize";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE as string;
 
@@ -74,4 +76,72 @@ export async function getAuthorById(id: number) {
 }
 
 
+export async function createBook(book: Omit<Book, "id">): Promise<Book> {
+  const res = await fetch(`${BASE_URL}/api/books`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(book),
+  });
+    if (!res.ok) {
+        throw new Error("Error al crear el libro");
+    }
 
+    return res.json() as Promise<Book>;
+}
+
+export async function createPrize(prize: Omit<prize, "id">): Promise<prize> {
+    const res = await fetch(`${BASE_URL}/api/prizes`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(prize),
+    });
+    if (!res.ok) {
+        throw new Error("Error al crear el premio");
+    }
+
+    return res.json() as Promise<prize>;
+}
+
+export async function addBookAuthor (bookId: number, authorId: number): Promise<Book> {
+
+    const res = await fetch(`${BASE_URL}/api/authors/${authorId}/books/${bookId}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+    if (!res.ok) {
+        throw new Error("Error al agregar el libro al autor");
+    }
+    return res.json() as Promise<Book>;
+}
+
+export async function addPrizeAuthor (prizeId: number, authorId: number): Promise<prize> {
+    const res = await fetch(`${BASE_URL}/api/prizes/${prizeId}/author/${authorId}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json", 
+        },
+    });
+    if (!res.ok) {
+        throw new Error("Error al agregar el premio al autor");
+    }
+    return res.json() as Promise<prize>;
+}
+
+export async function getBooks(): Promise<Book[]> {
+    const res = await fetch(`${BASE_URL}/api/books`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+    if (!res.ok) {
+        throw new Error("Error al obtener los libros");
+    }
+    return res.json() as Promise<Book[]>;
+}

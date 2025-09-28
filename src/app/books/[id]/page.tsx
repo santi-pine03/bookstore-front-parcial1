@@ -5,7 +5,7 @@ import {Book} from "@/types/book";
 import { getBookById } from "@/lib/api";
 import BookDetail from "@/components/BookDetail";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 
 export default function AuthorPage() {
 

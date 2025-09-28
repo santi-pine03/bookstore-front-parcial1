@@ -1,6 +1,7 @@
 import { Author } from "@/types/author";
 import { Book } from "@/types/book";
 import { prize } from "@/types/prize";
+import { Review } from "@/types/review";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE as string;
 
@@ -76,7 +77,7 @@ export async function getAuthorById(id: number) {
 }
 
 
-export async function createBook(book: Omit<Book, "id">): Promise<Book> {
+export async function createBook(book: Omit<Book, "id" | "reviews" | "author">): Promise<Book> {
   const res = await fetch(`${BASE_URL}/api/books`, {
     method: "POST",
     headers: {
@@ -150,4 +151,18 @@ export async function getBookById(id: number) {
   const res = await fetch(`${BASE_URL}/api/books/${id}`);
   if (!res.ok) throw new Error("No se pudo cargar el libro");
   return res.json();
+}
+
+export async function createReview(id: number, review: Omit<Review, "id">): Promise<Review> {
+    const res = await fetch(`${BASE_URL}/api/books/${id}/reviews`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(review),
+    });
+    if (!res.ok) {
+        throw new Error("Error al crear la reseña");
+    }
+    return res.json() as Promise<Review>;
 }

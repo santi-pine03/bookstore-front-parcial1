@@ -7,7 +7,8 @@ export interface Book {
     isbn: string;
     image: string;
     description: string;
-    reviews: Review;
+    reviews: Review[];
     author: Author;
     publishingDate: string;
+    editorial: {name: string};
 }

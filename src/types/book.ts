@@ -1,10 +1,13 @@
+import { Author } from "./author";
+import { Review } from "./review";
+
 export interface Book {
     id: number;
     name: string;
     isbn: string;
     image: string;
     description: string;
-    editorial: string;
-    reviews: string;
-    author: number;
+    reviews: Review;
+    author: Author;
+    publishingDate: string;
 }

@@ -145,3 +145,9 @@ export async function getBooks(): Promise<Book[]> {
     }
     return res.json() as Promise<Book[]>;
 }
+
+export async function getBookById(id: number) {
+  const res = await fetch(`${BASE_URL}/api/books/${id}`);
+  if (!res.ok) throw new Error("No se pudo cargar el libro");
+  return res.json();
+}

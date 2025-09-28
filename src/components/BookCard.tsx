@@ -1,15 +1,9 @@
 import React from "react";
-
-interface Book {
-    image: string;
-    title: string;
-    description: string;
-    publicationDate: string;
-}
+import { Book } from "@/types/book";
 
 export default function BookCard({ book, children }: { book: Book ; children?: React.ReactNode }) {
     return (
-      <div className="w-50 border rounded-lg p-4 shadow-lg bg-[#1E1E1B] hover:scale-101">
+      <div className="w-90 border rounded-lg p-8 shadow-lg bg-[#1E1E1B] hover:scale-101">
       {children}
     </div>
   );
@@ -29,7 +23,7 @@ function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
     return (
         <div
             data-slot="card-title"
-            className={`leading-none font-semibold text-center text-white ${className}`}
+            className={`leading-none font-semibold text-center py-4 text-white ${className}`}
             {...props}
         />
     );
@@ -39,7 +33,7 @@ function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
     return (
         <div
             data-slot="card-description"
-            className={`text-muted-foreground text-sm ${className}`}
+            className={`text-justify text-sm text-white ${className}`}
             {...props}
         />
     );
@@ -59,7 +53,7 @@ function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
     return (
         <div
             data-slot="card-footer"
-            className={`flex items-center gap-3 px-6 mt-4 ${className}`}
+            className={`flex items-center gap-3 px-6 mt-4 text-white ${className}`}
             {...props}
         />
     );

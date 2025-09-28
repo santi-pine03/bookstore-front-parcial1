@@ -54,7 +54,7 @@ export default function AuthorPage() {
     useEffect(() => {fetchAuthors(); }, []); //Se llama una sola vez al cargar la pagina
 
     return (
-            <div className = "bg-[#4D5061]">
+            <div className = "bg-[#4D5061] min-h-screen">
             <header className="mb-10 flex items-center justify-between border-b border-[#3D4B62] bg-[#404145] pb-6 px-6 py-6">
                 <div>
                     <nav>

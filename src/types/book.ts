@@ -10,5 +10,5 @@ export interface Book {
     reviews: Review[];
     author: Author;
     publishingDate: string;
-    editorial: {name: string};
+    editorial: {id: number};
 }

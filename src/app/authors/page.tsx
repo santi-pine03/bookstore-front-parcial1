@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import {Author} from "@/types/author";
-import { getAuthors, deleteAuthor } from "@/lib/api";
+import { getAuthors, deleteAuthor, deleteBook, deletePrize, getAuthorById, removeAuthor, removeAuthorPrize } from "@/lib/api";
 import AuthorsList from "@/components/AuthorsList";
 import Link from "next/link";
 
@@ -38,7 +38,11 @@ export default function AuthorPage() {
             setAuthors(authors.filter(function (a) {
                 return a.id !== author.id;
             }));
-
+            const autor = await getAuthorById(author.id); 
+            await removeAuthor(author.id, autor.books[0].id);
+            await deleteBook(autor.books[0]); 
+            await removeAuthorPrize(autor.prizes[0].id);
+            await deletePrize(autor.prizes[0])
             await deleteAuthor(author);
         }
         catch(e){
@@ -69,6 +73,10 @@ export default function AuthorPage() {
                 href="/crear"
                 className="inline-flex items-center rounded-lg bg-[#1E1E1B] px-4 py-2 text-sm font-semibold text-white shadow hover:bg-[#494A4F] focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
                 >Crear autor</Link>
+                <Link
+                href="/books"
+                className="ml-2 inline-flex items-center rounded-lg bg-[#1E1E1B] px-4 py-2 text-sm font-semibold text-white shadow hover:bg-[#494A4F] focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
+                >Ver libros</Link>
                 </nav>
             </header>
             <div className="max-w-5xl mx-auto text-center">

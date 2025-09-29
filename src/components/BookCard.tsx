@@ -3,7 +3,10 @@ import { Book } from "@/types/book";
 
 export default function BookCard({ book, children }: { book: Book ; children?: React.ReactNode }) {
     return (
-      <div className="w-90 border rounded-lg p-8 shadow-lg bg-[#1E1E1B] hover:scale-101">
+      <div className="relative group w-90 border rounded-lg p-8 shadow-lg bg-[#1E1E1B] hover:scale-101">
+            <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 rounded bg-gray-200 px-2 py-1 text-xs text-black opacity-0 group-hover:opacity-100 transition">
+                Click para ver el detalle
+            </span>
       {children}
     </div>
   );

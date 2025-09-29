@@ -1,12 +1,13 @@
 import { Author } from "@/types/author";
 import { Book } from "@/types/book";
+import { Organization } from "@/types/organization";
 import { prize } from "@/types/prize";
 import { Review } from "@/types/review";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE as string;
 
 
-export async function createAuthor(author: Omit<Author, "id">): Promise<Author> {
+export async function createAuthor(author: Omit<Author, "id" | "books" | "prizes">): Promise<Author> {
   const res = await fetch(`${BASE_URL}/api/authors`, {
     method: "POST",
     headers: {
@@ -165,4 +166,79 @@ export async function createReview(id: number, review: Omit<Review, "id">): Prom
         throw new Error("Error al crear la reseña");
     }
     return res.json() as Promise<Review>;
+}
+
+export async function createOrganization(Organization: Omit<Organization, "id">): Promise<Organization> {
+    const res = await fetch(`${BASE_URL}/api/organizations`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(Organization),
+    });
+    if (!res.ok) {
+        throw new Error("Error al crear la organizacion");
+    }
+
+    return res.json() as Promise<Organization>;
+}
+
+export async function deleteBook(book: Book): Promise<void> {
+
+    const res = await fetch(`${BASE_URL}/api/books/${book.id}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+
+    if (!res.ok) {
+        throw new Error("Error al eliminar el libro");
+    }
+
+    return; // Debe mandar un codigo 204 No Content, por eso aca no se retorna nada
+}
+
+export async function deletePrize(prize: prize): Promise<void> {
+
+    const res = await fetch(`${BASE_URL}/api/prizes/${prize.id}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+
+    if (!res.ok) {
+        throw new Error("Error al eliminar el premio");
+    }
+
+    return; // Debe mandar un codigo 204 No Content, por eso aca no se retorna nada
+}
+
+export async function removeAuthor (authorId: number, bookId: number): Promise<void> {
+
+    const res = await fetch(`${BASE_URL}/api/books/${bookId}/authors/${authorId}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    }); 
+    if (!res.ok) {
+        throw new Error("Error al eliminar el libro del autor");
+    }
+    return; // Debe mandar un codigo 204 No Content, por eso aca no se retorna nada
+}
+
+export async function removeAuthorPrize (prizeId: number): Promise<void> {
+
+    const res = await fetch(`${BASE_URL}/api/prizes/${prizeId}/authors`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    }); 
+    if (!res.ok) {
+        throw new Error("Error al eliminar el libro del autor");
+    }
+    return; // Debe mandar un codigo 204 No Content, por eso aca no se retorna nada
 }

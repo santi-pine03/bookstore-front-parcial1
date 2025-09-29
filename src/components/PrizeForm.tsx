@@ -1,14 +1,16 @@
 import { prize } from "@/types/prize";
+import { Organization } from "@/types/organization";
 
 type Props = {
   prize: Omit<prize, "id">;
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  Organization: Omit<Organization, "id">;
+  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
 };
 
-const PrizeForm = ({ prize, onChange }: Props) => {
+const PrizeForm = ({ prize, onChange, Organization }: Props) => {
   return (
     <div className="space-y-4 bg-gray-200 p-4 rounded-lg shadow-md w-full max-w-md">
-      {/* Nombre del premio */}
+
       <div>
         <label htmlFor="name" className="block text-sm font-medium text-gray-700">
           Nombre del Premio
@@ -24,7 +26,7 @@ const PrizeForm = ({ prize, onChange }: Props) => {
         />
       </div>
 
-      {/* Fecha de premiación */}
+
       <div>
         <label htmlFor="premiationDate" className="block text-sm font-medium text-gray-700">
           Fecha de Premiación
@@ -40,23 +42,7 @@ const PrizeForm = ({ prize, onChange }: Props) => {
         />
       </div>
 
-      {/* Organización */}
-      <div>
-        <label htmlFor="organization" className="block text-sm font-medium text-gray-700">
-          Organización
-        </label>
-        <input
-          id="organization"
-          name="organization"
-          value={prize.organization}
-          onChange={onChange}
-          required
-          placeholder="Ej: Academia Sueca"
-          className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
 
-      {/* Descripción */}
       <div>
         <label htmlFor="description" className="block text-sm font-medium text-gray-700">
           Descripción
@@ -72,6 +58,44 @@ const PrizeForm = ({ prize, onChange }: Props) => {
           className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
+
+      <div>
+        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+          Nombre de la organizacion 
+        </label>
+        <input
+          id="name"
+          name="name"
+          value={Organization.name}
+          onChange={onChange}
+          required
+          data-scope="organization"
+          placeholder = "No puede ser una organizacion ya usada"
+          className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+
+      <div>
+        <label
+            htmlFor="TIPO_ORGANIZACION"
+            className="block text-sm font-medium text-gray-700">
+            Tipo de Organización
+        </label>
+        <select
+            id="TIPO_ORGANIZACION"
+            name="TIPO_ORGANIZACION"
+            value={Organization.TIPO_ORGANIZACION}
+            onChange={onChange}
+            required
+            data-scope="organization"
+            className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="">Selecciona una opción</option>
+            <option value="publica">PUBLICA</option>
+            <option value="privada">PRIVADA</option>
+            <option value="ong">FUNDACION</option>
+        </select>
+        </div>
+
     </div>
   );
 };

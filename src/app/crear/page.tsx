@@ -7,12 +7,13 @@ import PrizeForm from "@/components/PrizeForm";
 import { Author } from "@/types/author";
 import { Book } from "@/types/book";
 import { prize } from "@/types/prize";
-import { createAuthor, createBook, createPrize } from "@/lib/api";
+import { Organization } from "@/types/organization";
+import { createAuthor, createBook, createPrize, createOrganization, addBookAuthor, addPrizeAuthor, getAuthorById, getBookById } from "@/lib/api";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function CreateAuthor() {
-  const [author, setAuthor] = useState<Omit<Author, "id">>({
+  const [author, setAuthor] = useState<Omit<Author, "id"| "books" | "prizes">>({
     name: "",
     image: "",
     birthDate: "",
@@ -24,13 +25,18 @@ export default function CreateAuthor() {
     image: "",
     description: "",
     publishingDate: "",
-    editorial: {name:"Editorial Base"}
+    editorial: {id:1000}
   });
   const [prize, setPrize] = useState<Omit<prize, "id">>({
     premiationDate: "",
     name: "",
     description: "",
-    organization: "",
+    organization: {id: 0}
+  });
+
+  const [organization, setOrganization] = useState<Omit<Organization, "id">>({
+    name: "",
+	  TIPO_ORGANIZACION: ""
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -57,13 +63,17 @@ export default function CreateAuthor() {
     }));
   }
 
-    function handlePrizeChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-    const { name, value } = e.target;
-    setPrize((prevPrize) => ({
-      ...prevPrize,
-      [name]: value,
-    }));
-  }
+    function handlePrizeChange( e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
+      const { name, value, dataset } = e.target as HTMLInputElement;
+
+      if (dataset.scope === 'organization') {
+        // actualiza organización
+        setOrganization(prev => ({ ...prev, [name]: value }));
+      } else {
+        // actualiza prize
+        setPrize(prev => ({ ...prev, [name]: value }));
+      }
+    }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -71,9 +81,14 @@ export default function CreateAuthor() {
     setError(null);
 
     try {
-      await createAuthor(author);
-      await createBook(book);
-      await createPrize(prize);
+      const newAuthor = await createAuthor(author);
+      const newBook = await createBook(book);
+      await addBookAuthor( newBook.id, newAuthor.id); 
+      const savedOrganization = await createOrganization(organization);
+      prize.organization = {id: savedOrganization.id}; 
+      const newPrize = await createPrize(prize);
+      await addPrizeAuthor(newPrize.id, newAuthor.id);
+
 
       router.push("/authors"); // Al crear el autor con las demas cosas, vuelve a la lista de autores
     } catch (e) {
@@ -129,7 +144,7 @@ export default function CreateAuthor() {
             {/* Formulario del premio */}
             <div className="bg-gray-200 p-4 rounded-lg shadow-md">
               <h2 className="text-xl font-bold text-gray-700 mb-1 text-center">Formulario de Premio</h2>
-              <PrizeForm prize={prize} onChange={handlePrizeChange} />
+              <PrizeForm prize={prize} onChange={handlePrizeChange} Organization={organization} />
             </div>
 
             {/* Botón de envío */}

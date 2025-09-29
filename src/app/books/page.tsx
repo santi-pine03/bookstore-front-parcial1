@@ -43,6 +43,12 @@ export default function AuthorPage() {
                     >Bookstore</Link>
                     </nav>
                 </div>
+                    <nav>
+                    <Link
+                    href="/authors"
+                    className="ml-2 inline-flex items-center rounded-lg bg-[#1E1E1B] px-4 py-2 text-sm font-semibold text-white shadow hover:bg-[#494A4F] focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
+                    >Ver autores</Link>
+                    </nav>
             </header>
             <div className="max-w-full mx-auto px-6 text-center">
                 <h1 className="mb-8 text-3xl font-bold tracking-tight text-white">Libros</h1>

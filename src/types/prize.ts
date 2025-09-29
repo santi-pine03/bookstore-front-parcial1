@@ -3,5 +3,5 @@ export interface prize {
     premiationDate: string;
     name: string;
     description: string;
-    organization: string;
+    organization: {id: number};
 }

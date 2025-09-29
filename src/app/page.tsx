@@ -31,6 +31,13 @@ export default function Home() {
               <h2 className="text-lg font-semibold text-white">Crear un nuevo autor</h2>
             </Link>
           </div>
+          <div className="mt-6 grid grid-cols-1">
+            <Link
+              href="/books"
+              className="rounded-xl border border-white/10 bg-white/5 p-6 hover:bg-white/10">
+              <h2 className="text-lg font-semibold text-white">Ver listado de libros</h2>
+            </Link>
+          </div>
         </section>
       </div>
     </div>

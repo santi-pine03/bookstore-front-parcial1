@@ -1,7 +1,7 @@
 import { Author } from "@/types/author";
 
 type Props = {
-  author: Omit<Author, "id">;
+  author: Omit<Author, "id" | "books" | "prizes">;
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 };
 
